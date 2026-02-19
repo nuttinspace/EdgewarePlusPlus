@@ -29,7 +29,7 @@ from config.settings import Settings
 from desktop_notifier.common import Icon
 from desktop_notifier.sync import DesktopNotifierSync
 from features.misc import mitosis_popup, open_web
-from os_utils import set_borderless, set_clickthrough
+from os_utils import set_borderless, set_clickthrough, is_linux
 from pack import Pack
 from panic import panic
 from paths import Assets, Data
@@ -60,6 +60,8 @@ class Popup(Toplevel):
         set_borderless(self)
 
         self.opacity = self.settings.opacity
+        if is_linux():
+            self.wait_visibility(self)
         self.attributes("-alpha", self.opacity)
 
     def init_finish(self) -> None:
